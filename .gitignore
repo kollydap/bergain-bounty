@@ -1,0 +1,53 @@
+/env
+env
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local development settings
+local_settings.py
+
+# Database
+db.sqlite3
+
+# Static files (usually collected by Django's collectstatic)
+static/
+
+# Media files
+media/
+
+# Virtual environment
+venv/
+.env
+
+# Ignore the pipenv virtual environment
+Pipfile
+Pipfile.lock
+
+# Ignore logs and temporary files
+*.log
+*.pot
+*.pyc
+*.swp
+*~
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Visual Studio Code settings
+.vscode/
+
+# Ignore PyCharm settings
+.idea/
+*.iml
+
+# Ignore Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Ignore pytest cache
+__pycache__/
+.pytest_cache/
