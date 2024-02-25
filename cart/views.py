@@ -27,7 +27,7 @@ def index(request):
 @csrf_exempt
 def create_cart_item(request):
     if request.method == "POST":
-        data = request.POST  # Assuming data is sent as form data
+        data = JSONParser().parse(request)
         serialized_cart_item = CartItemSerializer(data=data)
         if serialized_cart_item.is_valid():
             user_id = data.get("user_id")
@@ -37,7 +37,7 @@ def create_cart_item(request):
                 return JsonResponse({"error": "User not found"}, status=404)
 
             cart, created = Cart.objects.get_or_create(user=user)
-            cart_item = serialized_cart_item.save(cart=cart)
+            serialized_cart_item.save(cart=cart)
 
             return JsonResponse(serialized_cart_item.data, status=201)
         return JsonResponse(serialized_cart_item.errors, status=400)
