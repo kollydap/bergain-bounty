@@ -26,6 +26,9 @@ def index(request):
 
 @csrf_exempt
 def create_cart_item(request):
+    """
+    To  add to cart
+    """
     if request.method == "POST":
         data = JSONParser().parse(request)
         serialized_cart_item = CartItemSerializer(data=data)
