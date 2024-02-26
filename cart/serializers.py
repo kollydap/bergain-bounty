@@ -25,6 +25,17 @@ class CartItemSerializer(serializers.ModelSerializer):
         cart, created = Cart.objects.get_or_create(user=user_id)
 
         # Create the cart item and associate it with the cart
-        cart_item = CartItem.objects.create(**validated_data)
+        # cart_item = CartItem.objects.create(**validated_data)
+
+        # Check if the product is already in the cart
+        print(validated_data)
+        cart_item, item_created = CartItem.objects.get_or_create(
+            cart=cart, product=validated_data["product"]
+        )
+        # If the item is already in the cart, update its quantity
+        cart_item.quantity += validated_data["quantity"]
+        cart_item.save()
+        
+            
 
         return cart_item
