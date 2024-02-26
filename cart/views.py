@@ -46,3 +46,19 @@ def create_cart_item(request):
         return JsonResponse(serialized_cart_item.errors, status=400)
     else:
         return JsonResponse({"error": "Method not allowed"}, status=405)
+
+
+@csrf_exempt
+def get_user_cart(request, pk):
+    if request.method == "GET":
+        try:
+            user = User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            return JsonResponse({"error": "User not found"}, status=404)
+        
+        cart, cart_created = Cart.objects.get_or_create(user=user)
+        serialized_cart = CartSerializer(instance=cart)
+        
+        return JsonResponse(data=serialized_cart.data, status=200)
+    else:
+        return JsonResponse({"error": "Method not allowed"}, status=405)
