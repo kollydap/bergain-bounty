@@ -16,7 +16,7 @@ from django.views.static import serve
 schema_view = get_schema_view(
     openapi.Info(
         title="Your API",
-        default_version='v1',
+        default_version="v1",
         description="Your API description",
         terms_of_service="https://www.example.com/terms/",
         contact=openapi.Contact(email="contact@example.com"),
@@ -30,13 +30,21 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/products/", include("product.urls", namespace="product")),
-    path('api/v1/user_auth/', include("user_auth.urls")),
+    path("api/v1/user_auth/", include("user_auth.urls")),
     path("api/v1/cart/", include("cart.urls", namespace="cart")),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api-auth/", include("rest_framework.urls")),
-    path('password-reset/<str:encoded_pk>/<str:token>/',views.ResetPasswordAPI.as_view(), name='reset-password'),
-    path('password-reset/',views.PasswordReset.as_view(),name='password-reset' ),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path(
+        "password-reset/<str:encoded_pk>/<str:token>/",
+        views.ResetPasswordAPI.as_view(),
+        name="reset-password",
+    ),
+    path("password-reset/", views.PasswordReset.as_view(), name="password-reset"),
+    path(
+        "swagger/",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
+    path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]
