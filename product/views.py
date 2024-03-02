@@ -17,9 +17,11 @@ def index(request):
         return JsonResponse(data=serialized_product.data, safe=False)
     elif request.method == "POST":
         data = JSONParser().parse(request)
+        print(data)
         serialized_product = ProductSerializer(data=data)
         if serialized_product.is_valid():
             serialized_product.save()
+            print(serialized_product)
             return JsonResponse(serialized_product.data, status=201)
         return JsonResponse(serialized_product.errors, status=400)
 

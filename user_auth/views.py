@@ -7,7 +7,6 @@ from rest_framework.authtoken.models import Token
 from .serializers import UserSerializer,EmailSerializer,ResetPasswordSerializer
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets
-
 from django.conf import settings
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.urls import reverse
@@ -17,9 +16,20 @@ from django.utils.http import urlsafe_base64_encode
 
 
 
+@api_view(['GET'])
+def list_user(request,username):
+    user=User.objects.get(username=username)
+    serializer=UserSerializer(user,many=False)
+    if user:
+        return Response(serializer.data)
+    return Response("user does not exist")
+
+
+
 
 @api_view(["POST"])
 def login(request):
+    #getting the user with the username
     user=get_object_or_404(User,username=request.data["username"])
 
     if not user.check_password(request.data['password']):
