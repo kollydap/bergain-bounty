@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from product.models import Product, UserProduct
+from product.models import Product
 
 
 # Serializers define the API representation.
