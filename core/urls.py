@@ -31,6 +31,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/products/", include("product.urls", namespace="product")),
     path('api/v1/user_auth/', include("user_auth.urls", namespace="user_auth")),
+    path("api/v1/order/", include("order.urls",namespace='order')),
+    path('api/v1/category/', include("category.urls", namespace='category')),
     path('api-auth/', include('rest_framework.urls')),
     path("api/v1/cart/", include("cart.urls", namespace="cart")),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -40,3 +42,4 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

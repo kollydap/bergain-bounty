@@ -67,7 +67,9 @@ def signup(request):
 
 @api_view(['POST'])
 def log_out(request):
+    #check if the method is post
     if request.method=='POST':
+        # then if its not, go ahead and delete the token created for the user
         request.user.auth_token.delete()
         return Response({"Message": "you are logged out"}, status=status.HTTP_200_OK)
 
@@ -79,10 +81,15 @@ class PasswordReset(generics.GenericAPIView):
     def post(self, request):
     
         serializer = self.serializer_class(data=request.data)
+        #check if the serializer is valid
         serializer.is_valid(raise_exception=True)
+        #if it is valid, you get the email from the valid serailized data.
         email = serializer.data["email"]
+        # here, you are getting the user with the email and here you are getting the user's first object. 
         user = User.objects.filter(email=email).first()
+        # check if the user exists
         if user:
+            #if it exists, generate a url fot the user
             encoded_pk = urlsafe_base64_encode(force_bytes(user.pk))
             token = PasswordResetTokenGenerator().make_token(user)
             reset_url = reverse(
